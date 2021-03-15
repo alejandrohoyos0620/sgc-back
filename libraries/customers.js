@@ -13,7 +13,7 @@ async function registerACustomer(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} (name, phone_number, city, address, email, password) VALUES (${params});`, (error, results, fields) => {
+        connection.query(`INSERT INTO ${table} (name, phone_number, city, address, email, password, token_confirm) VALUES (${params});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

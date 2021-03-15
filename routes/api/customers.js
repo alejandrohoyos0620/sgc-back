@@ -4,7 +4,7 @@ const CustomersService = require('../../services/customers');
 const customerService = new CustomersService();
 
 router.post('/register', async function(req, res, next) {  
-    try{
+    try {
         const confirm = await customerService.registerCustomer(req.body);
         console.log(confirm);
         res.status(200).json({
@@ -15,5 +15,6 @@ router.post('/register', async function(req, res, next) {
         next(error);
     }
 });
+
 
 module.exports = router;
