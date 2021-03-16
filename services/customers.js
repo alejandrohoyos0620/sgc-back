@@ -1,9 +1,7 @@
-const CustomerLib = require('../libraries/customers');
-
 class CustomerService {
     constructor() {
         this.table = 'customers';
-        this.CustomerLib = CustomerLib;
+        this.CustomerLib = require('../libraries/customers');
     }
 
     generateSecret() {
