@@ -9,7 +9,7 @@ class AuthorizationService {
         const employeeResults = await this.EmployeeLib.login(params);
         let loginResults = customerResults.concat(employeeResults);
         if(loginResults.length === 0) {
-            return [200, {'message': 'El email o la contraseña es incorrecta, por favor intentalo de nuevo'}];
+            return [401, {'message': 'El email o la contraseña es incorrecta, por favor intentalo de nuevo'}];
         }
         else if(loginResults.length === 1) {
             if(!loginResults[0].hasOwnProperty('role')) {
