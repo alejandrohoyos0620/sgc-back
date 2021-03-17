@@ -1,3 +1,4 @@
+const crypto = require('crypto-js');
 class CustomerService {
     constructor() {
         this.table = 'customers';
@@ -15,10 +16,10 @@ class CustomerService {
     }
 
     async registerCustomer(registerParams) {
+        registerParams.password = crypto.AES.encrypt(registerParams.password, process.env.AES_KEY).toString();
         registerParams.secret = this.generateSecret();
         let separator = `','`;
         let values = `'${Object.values(registerParams).join(separator)}'`;
-        console.log(values);
         const confirm = await this.CustomerLib.registerACustomer(this.table, values);
         return confirm;
     }

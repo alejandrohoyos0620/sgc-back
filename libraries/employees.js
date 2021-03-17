@@ -23,7 +23,7 @@ async function registerAnEmployee(table, params) {
     });
 }
 
-async function login(params) {
+async function login(email) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -33,7 +33,7 @@ async function login(params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name as sub, role, address, token_confirm FROM employees WHERE (email='${params.email}') AND (password='${params.password}')`, (error, results, fields) => {
+        connection.query(`SELECT name as sub, role, address, password, token_confirm FROM employees WHERE email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
