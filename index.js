@@ -3,6 +3,11 @@ const path = require('path');
 const customersRouter = require('./routes/api/customers');
 const authorizationRouter = require('./routes/api/authorization');
 const cors = require('cors');
+const {
+    logErrors,
+    clientErrorHandler,
+    errorHandler
+} = require('./utils/middlewares/errorHandlers');
 
 //CORS
 const corsOptions = {
@@ -20,6 +25,11 @@ app.use(cors(corsOptions));
 //routes
 app.use('/api/customers', customersRouter);
 app.use('/api/auth', authorizationRouter);
+
+//error handlers
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 //server
 const server = app.listen(3000, function() {
     console.log(`Listening in localhost:${server.address().port}`);
