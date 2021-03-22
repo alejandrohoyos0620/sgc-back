@@ -33,7 +33,7 @@ async function login(email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name as sub, role, address, password, token_confirm FROM employees WHERE email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT name as sub, role, address, email, phone_number, password, token_confirm FROM employees WHERE email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

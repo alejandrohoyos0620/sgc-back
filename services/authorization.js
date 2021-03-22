@@ -23,7 +23,9 @@ class AuthorizationService {
                     sub: loginResults[0].sub, 
                     email: loginResults[0].email, 
                     address: loginResults[0].address, 
-                    role: loginResults[0].role
+                    role: loginResults[0].role,
+                    phone: loginResults[0].phone_number,
+                    city: loginResults[0].city ? loginResults[0].city : null                
                 };
                 const authToken = jwt.sign(payload, secret);
                 return [200, {token: authToken}];
