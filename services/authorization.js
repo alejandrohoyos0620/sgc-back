@@ -24,7 +24,6 @@ class AuthorizationService {
                     payload = new CustomerMap(loginResults[0].sub, loginResults[0].phone_number, loginResults[0].city, loginResults[0].address, loginResults[0].email, null);
                 }
                 const authToken = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
-                console.log(JSON.stringify(payload));
                 return [200, {token: authToken}];
             } else {
                 return [401, {'message': 'El email o la contraseña es incorrecta, por favor intentalo de nuevo'}];
