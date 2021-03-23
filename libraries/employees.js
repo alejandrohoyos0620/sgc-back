@@ -3,7 +3,7 @@ const {config} = require('../configuration/dbConfig')
 
 let connection;
 
-async function registerAnEmployee(table, params) {
+async function register(table, params) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -13,7 +13,7 @@ async function registerAnEmployee(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} (name, role, address, phone_number, email, password, token_confirm, establishment_nit) VALUES (${params});`, (error, results, fields) => {
+        connection.query(`INSERT INTO ${table} (name, role, address, phone_number, email, password, establishment_nit) VALUES (${params});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -33,7 +33,7 @@ async function login(email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name as sub, role, address, email, phone_number, password, token_confirm FROM employees WHERE email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT name as sub, role, address, phone_number, email, password, establishment_nit FROM employees WHERE email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -44,6 +44,6 @@ async function login(email) {
 }
 
 module.exports = {
-    registerAnEmployee,
+    register,
     login
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const customersRouter = require('./routes/api/customers');
+const usersRouter = require('./routes/api/users');
 const authorizationRouter = require('./routes/api/authorization');
 const cors = require('cors');
 const {
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 //routes
-app.use('/api/customers', customersRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/auth', authorizationRouter);
 
 //error handlers
