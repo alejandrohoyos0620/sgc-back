@@ -1,6 +1,6 @@
 class CustomerMap {
     constructor(name, phone, city, address, email, password){
-        this.fullName = name;
+        this.sub = name;
         this.phone = phone;
         this.city = city;
         this.address = address;
