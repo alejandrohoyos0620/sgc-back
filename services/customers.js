@@ -15,6 +15,18 @@ class CustomerService {
         const confirm = await this.CustomerLib.register(this.table, values);
         return confirm;
     }
+
+    async update(updateParams) {
+        const confirm = await this.CustomerLib.update(this.table, updateParams);
+        return confirm;
+    }
+
+    async getCustomer(email) {
+        let customer = await this.CustomerLib.getCustomer(this.table, email);
+        customer = new CustomersMap(customer.name, customer.phone_number, customer.city, customer.address, customer.email);
+        console.log(customer);
+        return customer;
+    }
 }
 
 module.exports = CustomerService;

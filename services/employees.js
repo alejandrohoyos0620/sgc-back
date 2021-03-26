@@ -15,6 +15,17 @@ class EmployeeService {
         const confirm = await this.EmployeeLib.register(this.table, values);
         return confirm;
     }
+
+    async update(updateParams) {
+        const confirm = await this.EmployeeLib.update(this.table, updateParams);
+        return confirm;
+    }
+
+    async getEmployee(email) {
+        let employee = await this.EmployeeLib.getEmployee(this.table, email);
+        employee = new EmployeesMap(employee.name, employee.role, employee.address, employee.phone_number, employee.email, employee.establishment_nitit);
+        return employee;
+    }
 }
 
 module.exports = EmployeeService;
