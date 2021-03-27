@@ -1,5 +1,6 @@
 class EmployeeMap {
-    constructor(name, role, address, phone, email, password, establishmentNit){
+    constructor(id, name, role, address, phone, email, password, establishmentNit){
+        this.setId(id);
         this.sub = name;
         this.role = role;
         this.address = address;
@@ -7,6 +8,12 @@ class EmployeeMap {
         this.email = email;
         this.setPassword(password);
         this.establishmentNit = establishmentNit;
+    }
+
+    setId(id) {
+        if(id != null) {
+            this.id = id;
+        }
     }
 
     setPassword(password) {

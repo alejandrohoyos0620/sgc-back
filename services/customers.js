@@ -9,7 +9,7 @@ class CustomerService {
 
     async register(registerParams) {
         registerParams.password = crypto.AES.encrypt(registerParams.password, process.env.AES_KEY).toString();
-        let registerValues = new CustomersMap(registerParams.fullName, registerParams.phone, registerParams.city, registerParams.address, registerParams.email, registerParams.password);
+        let registerValues = new CustomersMap(null, registerParams.fullName, registerParams.phone, registerParams.city, registerParams.address, registerParams.email, registerParams.password);
         let separator = `','`;
         let values = `'${Object.values(registerValues).join(separator)}'`;
         const confirm = await this.CustomerLib.register(this.table, values);
@@ -23,8 +23,13 @@ class CustomerService {
 
     async getCustomer(email) {
         let customer = await this.CustomerLib.getCustomer(this.table, email);
-        customer = new CustomersMap(customer.name, customer.phone_number, customer.city, customer.address, customer.email);
-        console.log(customer);
+        customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);
+        return customer;
+    }
+
+    async getById(id) {
+        let customer = await this.CustomerLib.getById(this.table, id);
+        customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);
         return customer;
     }
 }

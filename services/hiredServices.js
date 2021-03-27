@@ -1,0 +1,47 @@
+const CustomersService = require('./customers');
+const EmployeesService = require('./employees');
+const ServicesService = require('./services');
+const DevicesService = require('./devices');
+const HiredServicesMap = require('../utils/maps/hiredServices');
+
+class HiredServiceService {
+    constructor() {
+        this.HiredServiceLib = require('../libraries/hiredServices');
+        this.customersService = new CustomersService();
+        this.employeesService = new EmployeesService();
+        this.servicesService = new ServicesService();
+        this.devicesService = new DevicesService();
+    }
+
+    async mapList(hiredServicesList) {
+        let mappedHiredServicesList = [];
+        for(let hiredService of hiredServicesList) {
+            hiredServicesList[hiredService].customer = await this.customersService.getById(hiredService.customer_id);
+            hiredServicesList[hiredService].employee = await this.employeesService.getById(hiredService.employee_id);
+            hiredServicesList[hiredService].service = await this.servicesService.getById(hiredService.service_id);
+            hiredServicesList[hiredService].device = await this.devicesService.getById(hiredService.device_id);
+            delete hiredServicesList[hiredService].customer_id;
+            delete hiredServicesList[hiredService].employee_id;
+            delete hiredServicesList[hiredService].service_id;
+            delete hiredServicesList[hiredService].device_id;
+            mappedHiredServicesList.push(new HiredServicesMap(
+                hiredService.id, hiredServicesList[hiredService].customer, hiredServicesList[hiredService].employee, 
+                hiredServicesList[hiredService].service, hiredServicesList[hiredService].device, hiredService.status
+                )
+            );
+        }
+        return mappedHiredServicesList;
+    }
+
+    async listByEstablishmentAndStatus(establishmentId, status) {
+        let hiredServicesList = await this.HiredServiceLib.getByEstablishmentAndStatus(establishmentId, status);
+        return this.mapList(hiredServicesList);
+    }
+
+    async listByRepairmanAndStatus(repairmanId, status) {
+        let hiredServicesList = await this.HiredServiceLib.getByRepairmanAndStatus(repairmanId, status);
+        return this.mapList(hiredServicesList);
+    }
+}
+
+module.exports = HiredServiceService;

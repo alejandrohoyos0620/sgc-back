@@ -33,7 +33,7 @@ async function login(email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name as sub, phone_number, city, address, email, password FROM customers where email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name as sub, phone_number, city, address, email, password FROM customers where email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -72,7 +72,7 @@ async function getCustomer(table, email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name, phone_number, city, address, email FROM ${table} where email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, city, address, email FROM ${table} where email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

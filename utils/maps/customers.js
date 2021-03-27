@@ -1,5 +1,6 @@
 class CustomerMap {
-    constructor(name, phone, city, address, email, password){
+    constructor(id, name, phone, city, address, email, password){
+        this.setId(id);
         this.sub = name;
         this.phone = phone;
         this.city = city;
@@ -8,6 +9,11 @@ class CustomerMap {
         this.setPassword(password);
     }
 
+    setId(id) {
+        if(id != null) {
+            this.id = id;
+        }
+    }
     setPassword(password) {
         if(password != null) {
             this.password = password;

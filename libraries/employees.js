@@ -33,7 +33,7 @@ async function login(email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name as sub, role, address, phone_number, email, password, establishment_nit FROM employees WHERE email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name as sub, role, address, phone_number, email, password, establishment_nit FROM employees WHERE email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -73,7 +73,27 @@ async function getEmployee(table, email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT name, phone_number, role, address, email, establishment_nit FROM ${table} where email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where email='${email}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results[0]);
+        });
+        connection.end();
+    });
+}
+
+async function getRepairmansByEstablishment(establishmentId) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const statusSchema = Joi.object({
-    status: Joi.string().regex(/^approved|course|finished|notApproved$/).required()
+    status: Joi.string().regex(/^approved|course|finished|notApproved$/).required(),
+    establishmentId: Joi.number().required()
 });
 
 const statusWithRepairmanIdSchema = Joi.object({
