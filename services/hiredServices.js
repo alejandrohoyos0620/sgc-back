@@ -42,6 +42,36 @@ class HiredServiceService {
         let hiredServicesList = await this.HiredServiceLib.getByRepairmanAndStatus(repairmanId, status);
         return this.mapList(hiredServicesList);
     }
+
+    async changeStatus(id, newStatus) {
+        let confirm = await this.HiredServiceLib.changeStatus(this.table, id, newStatus);
+        return confirm;
+    }
+
+    async getById(id) {
+        let hiredService = await this.HiredServiceLib.getById(this.table, id);
+        let mappedHiredService = new HiredServicesMap(
+            hiredService.id, await this.customersService.getById(hiredService.customer_id),
+            await this.employeesService.getById(hiredService.repairman_id), 
+            await this.servicesService.getById(hiredService.service_id),
+            await this.devicesService.getById(hiredService.device_id), 
+            hiredService.status
+        );
+        return mappedHiredService;
+    }
+
+    async asignToARepairman(hiredServiceId, repairmanId) {
+        let confirm = await this.HiredServiceLib.setRepairman(this.table, hiredServiceId, repairmanId);
+        return confirm;
+    }
+
+    async approve(hiredServiceId, repairmanId) {
+        return [
+            await this.asignToARepairman(hiredServiceId, repairmanId),
+            await this.changeStatus(hiredServiceId, 'approved'),
+            await this.getById(hiredServiceId)
+        ];
+    }
 }
 
 module.exports = HiredServiceService;
