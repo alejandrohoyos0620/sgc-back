@@ -13,7 +13,7 @@ async function register(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} (name, role, address, phone_number, email, password, establishment_nit) VALUES (${params});`, (error, results, fields) => {
+        connection.query(`INSERT INTO ${table} (name, role, address, phone_number, email, password, establishment_id) VALUES (${params});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -53,7 +53,7 @@ async function update(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE ${table} SET name = '${params.fullName}', phone_number = '${params.phone}', role = '${params.role}', address = '${params.address}' WHERE email = '${params.email}'`, (error, results, fields) => {
+        connection.query(`UPDATE ${table} SET name = '${params.fullName}', phone_number = '${params.phone}', role = '${params.role}', address = '${params.address}' WHERE email = '${params.email}' AND id = ${params.id}`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -63,7 +63,7 @@ async function update(table, params) {
     });
 }
 
-async function getEmployee(table, email) {
+async function getById(table, id) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -73,7 +73,7 @@ async function getEmployee(table, email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where id='${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -107,5 +107,5 @@ module.exports = {
     register,
     login,
     update,
-    getEmployee
+    getById
 };

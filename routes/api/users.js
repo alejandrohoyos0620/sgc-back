@@ -50,10 +50,10 @@ async function(req, res, next) {
     try{
         if(req.body.hasOwnProperty('role')) {
             confirm = await employeeService.update(req.body);
-            newUser = await employeeService.getEmployee(req.body.email);
+            newUser = await employeeService.getById(req.body.id);
         } else {
             confirm = await customerService.update(req.body);
-            newUser = await customerService.getCustomer(req.body.email);
+            newUser = await customerService.getById(req.body.id);
         }
         res.status(200).json({
             status: 'success',

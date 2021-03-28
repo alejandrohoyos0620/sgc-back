@@ -21,12 +21,6 @@ class CustomerService {
         return confirm;
     }
 
-    async getCustomer(email) {
-        let customer = await this.CustomerLib.getCustomer(this.table, email);
-        customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);
-        return customer;
-    }
-
     async getById(id) {
         let customer = await this.CustomerLib.getById(this.table, id);
         customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);
