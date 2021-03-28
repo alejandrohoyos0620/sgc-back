@@ -25,7 +25,7 @@ class EmployeeService {
 
     async getById(id) {
         let employee = await this.EmployeeLib.getById(this.table, id);
-        employee = new EmployeesMap(employee.id, employee.name, employee.role, employee.address, employee.phone_number, employee.email, await this.establishmentService.getById(employee.establishmentId));
+        employee = new EmployeesMap(employee.id, employee.name, employee.role, employee.address, employee.phone_number, employee.email, null, await this.establishmentService.getById(employee.establishment_id));
         return employee;
     }
 

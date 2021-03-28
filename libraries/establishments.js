@@ -17,6 +17,7 @@ async function getById(table, id) {
             if(error) {
                 return reject(error);
             }
+            console.log(results);
             return resolve(results[0]);
         });
         connection.end();

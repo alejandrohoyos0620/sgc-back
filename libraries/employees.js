@@ -33,7 +33,7 @@ async function login(email) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name as sub, role, address, phone_number, email, password, establishment_nit FROM employees WHERE email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name as sub, role, address, phone_number, email, password, establishment_id FROM employees WHERE email='${email}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -73,7 +73,7 @@ async function getById(table, id) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where id='${id}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM ${table} where id='${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

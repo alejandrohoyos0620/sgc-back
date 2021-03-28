@@ -10,6 +10,12 @@ class EstablishmentMap {
         this.openingTime = openingTime;
         this.closingTime = closingTime;
     }
+
+    setId(id) {
+        if(id != null) {
+            this.id = id;
+        }
+    }
 }
 
 module.exports = EstablishmentMap;

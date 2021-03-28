@@ -7,6 +7,7 @@ class EstablishmentService {
     }
     async getById(id) {
         let establishment = await this.establishmentLib.getById(this.table, id);
+        console.log(establishment);
         establishment = new EstablishmentsMap(
             establishment.id, establishment.nit, establishment.name, establishment.address, 
             establishment.city, establishment.phone_number, establishment.email, establishment.opening_time, establishment.closing_time
