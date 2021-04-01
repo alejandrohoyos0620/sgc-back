@@ -93,7 +93,7 @@ async function getRepairmansByEstablishment(establishmentId) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM employees where id ='${establishmentId}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM employees where establishment_id ='${establishmentId}' AND role = 'repairman'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
