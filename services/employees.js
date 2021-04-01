@@ -34,7 +34,14 @@ class EmployeeService {
         for(let repairman of repairmansList) {
             mappedRepairmansList.push(
                 new EmployeesMap(
-                    repairman.name, repairman.role, repairman.address, repairman.phone_number, repairman.establishment_nit
+                    repairman.id, 
+                    repairman.name, 
+                    repairman.role, 
+                    repairman.address, 
+                    repairman.phone_number, 
+                    repairman.email, 
+                    repairman.password, 
+                    await this.establishmentService.getById(repairman.establishment_id)
                 )
             );
         }

@@ -93,11 +93,11 @@ async function getRepairmansByEstablishment(establishmentId) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_nit FROM ${table} where email='${email}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM employees where id ='${establishmentId}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
-            return resolve(results[0]);
+            return resolve(results);
         });
         connection.end();
     });
@@ -107,5 +107,6 @@ module.exports = {
     register,
     login,
     update,
-    getById
+    getById, 
+    getRepairmansByEstablishment
 };

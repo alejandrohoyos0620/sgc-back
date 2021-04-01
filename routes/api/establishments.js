@@ -11,7 +11,7 @@ require('../../utils/auth/strategies/jwt');
 
 router.get('/repairmans',
 passport.authenticate('jwt', {session: false}),
-validation(establishmentsSchemas.establishmentIdSchema),
+validation(establishmentsSchemas.establishmentIdSchema, 'query'),
 async function(req, res, next) {
     try {
         const repairmansList = await employeeService.listRepairmansByEstablishment(req.query.establishmentId);
