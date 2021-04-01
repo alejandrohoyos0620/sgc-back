@@ -4,6 +4,7 @@ const usersRouter = require('./routes/api/users');
 const authorizationRouter = require('./routes/api/authorization');
 const hiredServicesRouter = require('./routes/api/hiredServices');
 const establishmentsRouter = require('./routes/api/establishments');
+const servicesRouter = require('./routes/api/services');
 const cors = require('cors');
 const {
     logErrors,
@@ -29,6 +30,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/auth', authorizationRouter);
 app.use('/api/hiredServices', hiredServicesRouter);
 app.use('/api/establishments', establishmentsRouter);
+app.use('/api/services', servicesRouter);
 
 //error handlers
 app.use(logErrors);
