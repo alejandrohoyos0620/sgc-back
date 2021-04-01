@@ -15,7 +15,7 @@ const changeStatusSchema = Joi.object({
 });
 
 const approveSchema = Joi.object({
-    id: Joi.number().required(),
+    id: Joi.number().positive().required(),
     repairmanId: Joi.number().positive().required()
 });
 module.exports = {

@@ -17,7 +17,6 @@ async function(req, res, next) {
     if(!req.body.hasOwnProperty('role')){
         try {
             const confirm = await customerService.register(req.body);
-            console.log(confirm);
             res.status(200).json({
                 status: "success",
                 results: confirm
@@ -29,7 +28,6 @@ async function(req, res, next) {
         try {
             delete req.body.city;
             const confirm = await employeeService.register(req.body);
-            console.log(confirm);
             res.status(200).json({
                 status: "success",
                 results: confirm

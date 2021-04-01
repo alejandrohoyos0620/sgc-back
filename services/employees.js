@@ -4,7 +4,6 @@ const EstablishmentsService = require('./establishments');
 
 class EmployeeService {
     constructor() {
-        this.table = 'employees';
         this.EmployeeLib = require('../libraries/employees');
         this.establishmentService = new EstablishmentsService();
     }
@@ -14,17 +13,17 @@ class EmployeeService {
         let registerValues = new EmployeesMap(null, registerParams.fullName, registerParams.role, registerParams.address, registerParams.phone, registerParams.email, registerParams.password, registerParams.establishmentId);
         let separator = `','`;
         let values = `'${Object.values(registerValues).join(separator)}'`;
-        const confirm = await this.EmployeeLib.register(this.table, values);
+        const confirm = await this.EmployeeLib.register(values);
         return confirm;
     }
 
     async update(updateParams) {
-        const confirm = await this.EmployeeLib.update(this.table, updateParams);
+        const confirm = await this.EmployeeLib.update(updateParams);
         return confirm;
     }
 
     async getById(id) {
-        let employee = await this.EmployeeLib.getById(this.table, id);
+        let employee = await this.EmployeeLib.getById(id);
         employee = new EmployeesMap(employee.id, employee.name, employee.role, employee.address, employee.phone_number, employee.email, null, await this.establishmentService.getById(employee.establishment_id));
         return employee;
     }

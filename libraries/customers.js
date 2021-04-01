@@ -3,7 +3,7 @@ const {config} = require('../configuration/dbConfig')
 
 let connection;
 
-async function register(table, params) {
+async function register(params) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -13,7 +13,7 @@ async function register(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} (name, phone_number, city, address, email, password) VALUES (${params});`, (error, results, fields) => {
+        connection.query(`INSERT INTO customers (name, phone_number, city, address, email, password) VALUES (${params});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -42,7 +42,7 @@ async function login(email) {
         connection.end();
     });
 }
-async function update(table, params) {
+async function update(params) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -52,7 +52,7 @@ async function update(table, params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE ${table} SET name = '${params.fullName}', phone_number = '${params.phone}', city = '${params.city}', address = '${params.address}' WHERE email = '${params.email}' AND id = '${params.id}'`, (error, results, fields) => {
+        connection.query(`UPDATE customers SET name = '${params.fullName}', phone_number = '${params.phone}', city = '${params.city}', address = '${params.address}' WHERE email = '${params.email}' AND id = '${params.id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -62,7 +62,7 @@ async function update(table, params) {
     });
 }
 
-async function getById(table, id) {
+async function getById(id) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -72,7 +72,7 @@ async function getById(table, id) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, city, address, email FROM ${table} where id='${id}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, city, address, email FROM customers where id='${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

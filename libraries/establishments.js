@@ -3,7 +3,7 @@ const {config} = require('../configuration/dbConfig')
 
 let connection;
 
-async function getById(table, id) {
+async function getById(id) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -13,11 +13,10 @@ async function getById(table, id) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, nit, name, address, city, phone_number, email, opening_time, closing_time FROM ${table} where id='${id}'`, (error, results, fields) => {
+        connection.query(`SELECT id, nit, name, address, city, phone_number, email, opening_time, closing_time FROM establishments where id='${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
-            console.log(results);
             return resolve(results[0]);
         });
         connection.end();

@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 //routes
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authorizationRouter);
-app.use('/api/hiredservices', hiredServicesRouter);
+app.use('/api/hiredServices', hiredServicesRouter);
 app.use('/api/establishments', establishmentsRouter);
 
 //error handlers

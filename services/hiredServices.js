@@ -15,18 +15,26 @@ class HiredServiceService {
 
     async mapList(hiredServicesList) {
         let mappedHiredServicesList = [];
-        for(let hiredService of hiredServicesList) {
-            hiredServicesList[hiredService].customer = await this.customersService.getById(hiredService.customer_id);
-            hiredServicesList[hiredService].employee = await this.employeesService.getById(hiredService.employee_id);
-            hiredServicesList[hiredService].service = await this.servicesService.getById(hiredService.service_id);
-            hiredServicesList[hiredService].device = await this.devicesService.getById(hiredService.device_id);
-            delete hiredServicesList[hiredService].customer_id;
-            delete hiredServicesList[hiredService].employee_id;
-            delete hiredServicesList[hiredService].service_id;
-            delete hiredServicesList[hiredService].device_id;
+        for(let [index, hiredService] of hiredServicesList.entries()) {
+            hiredServicesList[index].customer = await this.customersService.getById(hiredService.customer_id);
+            hiredServicesList[index].employee = hiredService.repairman_id ? await this.employeesService.getById(hiredService.repairman_id) : null;
+            hiredServicesList[index].service = await this.servicesService.getById(hiredService.service_id);
+            hiredServicesList[index].device = await this.devicesService.getById(hiredService.device_id);
+            delete hiredServicesList[index].customer_id;
+            delete hiredServicesList[index].employee_id;
+            delete hiredServicesList[index].service_id;
+            delete hiredServicesList[index].device_id;
             mappedHiredServicesList.push(new HiredServicesMap(
-                hiredService.id, hiredServicesList[hiredService].customer, hiredServicesList[hiredService].employee, 
-                hiredServicesList[hiredService].service, hiredServicesList[hiredService].device, hiredService.status
+                hiredService.id, 
+                hiredServicesList[index].customer, 
+                hiredServicesList[index].employee, 
+                hiredServicesList[index].service, 
+                hiredServicesList[index].device, 
+                hiredService.status,
+                hiredService.created_at,
+                hiredService.description,
+                hiredService.hour,
+                hiredService.date
                 )
             );
         }
@@ -44,30 +52,35 @@ class HiredServiceService {
     }
 
     async changeStatus(id, newStatus) {
-        let confirm = await this.HiredServiceLib.changeStatus(this.table, id, newStatus);
+        let confirm = await this.HiredServiceLib.changeStatus(id, newStatus);
         return confirm;
     }
 
     async getById(id) {
-        let hiredService = await this.HiredServiceLib.getById(this.table, id);
+        let hiredService = await this.HiredServiceLib.getById(id);
         let mappedHiredService = new HiredServicesMap(
-            hiredService.id, await this.customersService.getById(hiredService.customer_id),
-            await this.employeesService.getById(hiredService.repairman_id), 
+            hiredService.id, 
+            await this.customersService.getById(hiredService.customer_id),
+            hiredService.repairman_id ? await this.employeesService.getById(hiredService.repairman_id) : null, 
             await this.servicesService.getById(hiredService.service_id),
             await this.devicesService.getById(hiredService.device_id), 
-            hiredService.status
+            hiredService.status,
+            hiredService.created_at,
+            hiredService.description,
+            hiredService.hour,
+            hiredService.date
         );
         return mappedHiredService;
     }
 
-    async asignToARepairman(hiredServiceId, repairmanId) {
-        let confirm = await this.HiredServiceLib.setRepairman(this.table, hiredServiceId, repairmanId);
+    async assignToARepairman(hiredServiceId, repairmanId) {
+        let confirm = await this.HiredServiceLib.assignToARepairman(hiredServiceId, repairmanId);
         return confirm;
     }
 
     async approve(hiredServiceId, repairmanId) {
         return [
-            await this.asignToARepairman(hiredServiceId, repairmanId),
+            await this.assignToARepairman(hiredServiceId, repairmanId),
             await this.changeStatus(hiredServiceId, 'approved'),
             await this.getById(hiredServiceId)
         ];

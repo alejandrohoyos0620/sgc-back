@@ -3,7 +3,6 @@ const CustomersMap = require('../utils/maps/customers');
 
 class CustomerService {
     constructor() {
-        this.table = 'customers';
         this.CustomerLib = require('../libraries/customers');
     }
 
@@ -12,17 +11,17 @@ class CustomerService {
         let registerValues = new CustomersMap(null, registerParams.fullName, registerParams.phone, registerParams.city, registerParams.address, registerParams.email, registerParams.password);
         let separator = `','`;
         let values = `'${Object.values(registerValues).join(separator)}'`;
-        const confirm = await this.CustomerLib.register(this.table, values);
+        const confirm = await this.CustomerLib.register(values);
         return confirm;
     }
 
     async update(updateParams) {
-        const confirm = await this.CustomerLib.update(this.table, updateParams);
+        const confirm = await this.CustomerLib.update(updateParams);
         return confirm;
     }
 
     async getById(id) {
-        let customer = await this.CustomerLib.getById(this.table, id);
+        let customer = await this.CustomerLib.getById(id);
         customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);
         return customer;
     }
