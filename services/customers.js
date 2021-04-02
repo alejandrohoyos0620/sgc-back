@@ -8,7 +8,7 @@ class CustomerService {
 
     async register(registerParams) {
         registerParams.password = crypto.AES.encrypt(registerParams.password, process.env.AES_KEY).toString();
-        let registerValues = new CustomersMap(null, registerParams.fullName, registerParams.phone, registerParams.city, registerParams.address, registerParams.email, registerParams.password);
+        let registerValues = new CustomersMap(null, registerParams.sub, registerParams.phone, registerParams.city, registerParams.address, registerParams.email, registerParams.password);
         let separator = `','`;
         let values = `'${Object.values(registerValues).join(separator)}'`;
         const confirm = await this.CustomerLib.register(values);

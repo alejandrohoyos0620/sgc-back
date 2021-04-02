@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const userSchema = Joi.object({
-    fullName: Joi.string().regex(/^(\w|ñ|Ñ|á|é|í|ó|ú)+(\s{1,1}(\w|ñ|Ñ|á|é|í|ó|ú)+){1,3}$/).max(100).required(),
+    sub: Joi.string().regex(/^(\w|ñ|Ñ|á|é|í|ó|ú)+(\s{1,1}(\w|ñ|Ñ|á|é|í|ó|ú)+){1,3}$/).max(100).required(),
     phone: Joi.string().regex(/^(\+|\-)?[0-9]{7,15}$/).required(),
     city: Joi.string().max(30),
     address: Joi.string().max(50).required(),
@@ -11,7 +11,7 @@ const userSchema = Joi.object({
 });
 const userUpdateSchema = Joi.object({
     id: Joi.number().positive().required(),
-    fullName: Joi.string().regex(/^(\w|ñ|Ñ|á|é|í|ó|ú)+(\s{1,1}(\w|ñ|Ñ|á|é|í|ó|ú)+){1,3}$/).max(100).required(),
+    sub: Joi.string().regex(/^(\w|ñ|Ñ|á|é|í|ó|ú)+(\s{1,1}(\w|ñ|Ñ|á|é|í|ó|ú)+){1,3}$/).max(100).required(),
     phone: Joi.string().regex(/^(\+|\-)?[0-9]{7,15}$/).required(),
     city: Joi.string().max(30),
     address: Joi.string().max(50).required(),

@@ -52,7 +52,7 @@ async function update(params) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE customers SET name = '${params.fullName}', phone_number = '${params.phone}', city = '${params.city}', address = '${params.address}' WHERE email = '${params.email}' AND id = '${params.id}'`, (error, results, fields) => {
+        connection.query(`UPDATE customers SET name = '${params.sub}', phone_number = '${params.phone}', city = '${params.city}', address = '${params.address}' WHERE email = '${params.email}' AND id = '${params.id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

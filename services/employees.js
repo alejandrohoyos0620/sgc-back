@@ -10,7 +10,7 @@ class EmployeeService {
 
     async register(registerParams) {
         registerParams.password = crypto.AES.encrypt(registerParams.password, process.env.AES_KEY).toString();
-        let registerValues = new EmployeesMap(null, registerParams.fullName, registerParams.role, registerParams.address, registerParams.phone, registerParams.email, registerParams.password, registerParams.establishmentId);
+        let registerValues = new EmployeesMap(null, registerParams.sub, registerParams.role, registerParams.address, registerParams.phone, registerParams.email, registerParams.password, registerParams.establishmentId);
         let separator = `','`;
         let values = `'${Object.values(registerValues).join(separator)}'`;
         const confirm = await this.EmployeeLib.register(values);
