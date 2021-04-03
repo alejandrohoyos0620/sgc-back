@@ -19,12 +19,12 @@ class AuthorizationService {
             if(crypto.AES.decrypt(loginResults[0].password, process.env.AES_KEY).toString(crypto.enc.Utf8) === params.password){
                 let payload;
                 if(loginResults[0].hasOwnProperty('role')) {
-                    console.log(loginResults[0]);
                     payload = new EmployeeMap(
                         loginResults[0].id, loginResults[0].sub, loginResults[0].role, loginResults[0].address, 
                         loginResults[0].phone_number, loginResults[0].email, null, 
-                        await this.EstablishmentLib.getById('establishments', loginResults[0].establishment_id)
-                    );                
+                        await this.EstablishmentLib.getById(loginResults[0].establishment_id)
+                    );  
+                    console.log(payload);              
                 } else {
                     payload = new CustomerMap(
                         loginResults[0].id, loginResults[0].sub, loginResults[0].phone_number, 
