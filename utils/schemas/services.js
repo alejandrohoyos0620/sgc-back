@@ -3,6 +3,10 @@ const establishmentIdSchema = Joi.object({
     establishmentId: Joi.number().required()
 });
 
+const readSchema = Joi.object({
+    id: Joi.number().required()
+});
+
 const createSchema = Joi.object({
     name: Joi.string().max(50).required(),
     isDeliverable: Joi.number().min(0).max(1).required(),
@@ -30,6 +34,7 @@ module.exports = {
     establishmentIdSchema,
     createSchema,
     updateSchema,
-    deleteSchema
+    deleteSchema,
+    readSchema
 }
 
