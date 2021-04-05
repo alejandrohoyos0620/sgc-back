@@ -21,4 +21,52 @@ async function(req, res, next) {
     }
 });
 
+router.post('/',
+passport.authenticate('jwt', {session: false}),
+validation(serviceSchemas.createSchema),
+async function(req, res, next) {
+    try{
+        const confirm = await serviceService.create(req.body);
+        res.status(200).json({
+            status: 'success',
+            message: "The service was created seccesfully",
+            data: confirm
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
+router.put('/',
+passport.authenticate('jwt', {session: false}),
+validation(serviceSchemas.updateSchema),
+async function(req, res, next) {
+    try{
+        const confirm = await serviceService.update(req.body);
+        res.status(200).json({
+            status: 'success',
+            message: "The service was updated seccesfully",
+            data: confirm
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
+router.delete('/',
+passport.authenticate('jwt', {session: false}),
+validation(serviceSchemas.deleteSchema, 'query'),
+async function(req, res, next) {
+    try{
+        const confirm = await serviceService.delete(req.query.id);
+        res.status(200).json({
+            status: 'success',
+            message: "The service was deleted seccesfully",
+            data: confirm
+        })
+    } catch(error) {
+        next(error);
+    }
+});
+
 module.exports = router;
