@@ -13,7 +13,7 @@ async function getById(id) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, is_deliverable, price, is_enable, description, establishment_id FROM services where id='${id}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, establishment_id FROM categories where id='${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -33,7 +33,7 @@ async function getByEstablishment(establishmentId) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, is_deliverable, price, is_enable, description, establishment_id FROM services where establishment_id='${establishmentId}'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, establishment_id FROM categories where establishment_id='${establishmentId}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -43,7 +43,7 @@ async function getByEstablishment(establishmentId) {
     });
 }
 
-async function create(service) {
+async function create(category) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -53,7 +53,7 @@ async function create(service) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO services (name, is_deliverable, price, is_enable, description, establishment_id) VALUES (${service});`, (error, results, fields) => {
+        connection.query(`INSERT INTO categories (name, establishment_id) VALUES (${category});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -63,7 +63,7 @@ async function create(service) {
     });
 }
 
-async function update(service) {
+async function update(category) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -73,7 +73,7 @@ async function update(service) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE services SET name = '${service.name}', is_deliverable = '${service.isDeliverable}', price = '${service.price}', is_enable = '${service.isEnable}', description = '${service.description}', establishment_id = '${service.establishmentId}' WHERE id = '${service.id}'`, (error, results, fields) => {
+        connection.query(`UPDATE categories SET name = '${category.name}', establishment_id = '${category.establishmentId}' WHERE id = '${category.id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -83,7 +83,7 @@ async function update(service) {
     });
 }
 
-async function deleteService(id) {
+async function deleteCategory(id) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -93,7 +93,7 @@ async function deleteService(id) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`DELETE FROM services WHERE id = '${id}'`, (error, results, fields) => {
+        connection.query(`DELETE FROM categories WHERE id = '${id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -108,5 +108,5 @@ module.exports = {
     getByEstablishment,
     update,
     create,
-    deleteService
+    deleteCategory
 }
