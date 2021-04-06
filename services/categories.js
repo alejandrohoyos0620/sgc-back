@@ -46,7 +46,7 @@ class CategoryService {
     }
 
     async delete(id) {
-        const confirm = await this.Category.deleteService(id);
+        const confirm = await this.CategoryLib.deleteCategory(id);
         return confirm;
     }
 }
