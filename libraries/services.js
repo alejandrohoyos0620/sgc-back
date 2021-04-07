@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const {config} = require('../configuration/dbConfig')
+const {config} = require('../configuration/dbConfig');
 
 let connection;
 
@@ -109,4 +109,4 @@ module.exports = {
     update,
     create,
     deleteService
-}
+};

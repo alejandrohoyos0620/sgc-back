@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const {config} = require('../configuration/dbConfig')
+const {config} = require('../configuration/dbConfig');
 
 let connection;
 
@@ -25,4 +25,4 @@ async function getById(id) {
 
 module.exports = {
     getById
-}
+};
