@@ -18,9 +18,24 @@ const approveSchema = Joi.object({
     id: Joi.number().positive().required(),
     repairmanId: Joi.number().positive().required()
 });
+
+const createSchema = Joi.object({
+    deviceId: Joi.number().positive().required(),
+    customerId: Joi.number().positive().required(),
+    serviceId: Joi.number().positive().required(),
+    status: Joi.string().regex(/^notApproved$/),
+    description: Joi.string().max(500).required()
+});
+
+const customerIdSchema = Joi.object({
+    customerId: Joi.number().positive().required()
+});
+
 module.exports = {
     statusSchema,
     statusWithRepairmanIdSchema,
     changeStatusSchema,
-    approveSchema
+    approveSchema,
+    createSchema,
+    customerIdSchema
 }

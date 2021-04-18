@@ -23,6 +23,21 @@ async function(req, res, next) {
     }
 });
 
+router.get('/customerServices', 
+passport.authenticate('jwt', {session: false}),
+validation(hiredServiceSchemas.customerIdSchema, 'query'),
+async function(req, res, next) {
+    try{
+        const hiredServicesList = await hiredServiceService.listByCustomer(req.query.customerId);
+        res.status(200).json({
+            status: 'success',
+            hiredServices: hiredServicesList
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
 router.get('/repairmanServices',
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.statusWithRepairmanIdSchema, 'query'),
@@ -67,6 +82,23 @@ async function(req, res, next) {
             assingData: results[0],
             changeData: results[1],
             approvedHiredService: results[2]
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
+router.post('/',
+passport.authenticate('jwt', {session: false}),
+validation(hiredServiceSchemas.createSchema),
+async function(req, res, next) {
+    try{
+        const results = await hiredServiceService.create(req.body);
+        res.status(200).json({
+            status: 'success',
+            message: 'The hiredService was created successfully',
+            data: results[0],
+            createdHiredServiceId: results[1]
         });
     } catch(error) {
         next(error);
