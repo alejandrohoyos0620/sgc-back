@@ -24,7 +24,9 @@ const createSchema = Joi.object({
     customerId: Joi.number().positive().required(),
     serviceId: Joi.number().positive().required(),
     status: Joi.string().regex(/^notApproved$/),
-    description: Joi.string().max(500).required()
+    description: Joi.string().max(500).required(),
+    date: Joi.string().regex(/^(\d{2,2}-){1,1}\d{4,4}$/).required(),
+    hour: Joi.string().required()
 });
 
 const customerIdSchema = Joi.object({

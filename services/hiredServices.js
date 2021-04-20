@@ -51,6 +51,11 @@ class HiredServiceService {
         return this.mapList(hiredServicesList);
     }
 
+    async listByCustomer(customerId) {
+        let hiredServicesList = await this.HiredServiceLib.getByCustomer(customerId);
+        return this.mapList(hiredServicesList);
+    }
+
     async changeStatus(id, newStatus) {
         let confirm = await this.HiredServiceLib.changeStatus(id, newStatus);
         return confirm;
@@ -83,6 +88,27 @@ class HiredServiceService {
             await this.assignToARepairman(hiredServiceId, repairmanId),
             await this.changeStatus(hiredServiceId, 'approved'),
             await this.getById(hiredServiceId)
+        ];
+    }
+
+    async create(hiredServiceParams) {
+        let values = new HiredServicesMap(
+            null, 
+            hiredServiceParams.customerId, 
+            null, 
+            hiredServiceParams.serviceId, 
+            hiredServiceParams.deviceId, 
+            hiredServiceParams.status ? hiredServiceParams.status : 'notApproved', 
+            null, 
+            hiredServiceParams.description, 
+            hiredServiceParams.hour, 
+            hiredServiceParams.date
+        );
+        values = values.join(',');
+        let results = await this.HiredServiceLib.create(values);
+        return [
+            results,
+            results.insertId
         ];
     }
 }
