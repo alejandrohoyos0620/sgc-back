@@ -6,7 +6,7 @@ class HiredServiceMap {
         this.service = service,
         this.device = device,
         this.status = status,
-        this.createdAt = createdAt,
+        this.setCreatedAt(createdAt),
         this.description = description,
         this.hour = hour,
         this.date = date

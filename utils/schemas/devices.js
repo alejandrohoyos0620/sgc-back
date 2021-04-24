@@ -3,7 +3,8 @@ const createSchema = Joi.object({
     name: Joi.string().max(50).required(),
     brand: Joi.string().max(30).required(),
     code: Joi.string().max(40).required(),
-    color: Joi.string().max(15)
+    color: Joi.string().max(15),
+    ownerId: Joi.number().positive().required()
 });
 
 const ownerIdSchema = Joi.object({

@@ -106,10 +106,52 @@ async function getById(id) {
     });
 }
 
+async function getByCustomer(customerId) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM hired_services WHERE customer_id = '${customerId}';`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
+async function create(hiredService) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO hired_services (customer_id, service_id, device_id, status, description, date, hour) VALUES (${hiredService});`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 module.exports = {
     getById,
     getByEstablishmentAndStatus,
     getByRepairmanAndStatus,
     changeStatus,
-    assignToARepairman
+    assignToARepairman,
+    getByCustomer,
+    create
 };

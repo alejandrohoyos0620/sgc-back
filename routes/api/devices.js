@@ -30,7 +30,7 @@ passport.authenticate('jwt', {session: false}),
 validation(devicesSchemas.ownerIdSchema, 'query'),
 async function(req, res, next) {
     try{
-        const customerServicesList= await deviceService.listByCustomerId(req.query.ownerId);
+        const customerServicesList= await deviceService.listByOwner(req.query.ownerId);
         res.status(200).json({
             status: 'success',
             devices: customerServicesList

@@ -104,7 +104,8 @@ class HiredServiceService {
             hiredServiceParams.hour, 
             hiredServiceParams.date
         );
-        values = values.join(',');
+        let separator = `','`;
+        values = `'${Object.values(values).join(separator)}'`;
         let results = await this.HiredServiceLib.create(values);
         return [
             results,

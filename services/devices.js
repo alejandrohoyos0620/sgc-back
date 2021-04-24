@@ -5,9 +5,25 @@ class DeviceService {
         this.DeviceLib = require('../libraries/devices');
     }
 
+    async mapList(devicesList) {
+        let mappedDevicesList = [];
+        for(let device of devicesList) {
+            mappedDevicesList.push(new DevicesMap(
+                device.id, 
+                device.name, 
+                device.brand,
+                device.code,
+                device.color, 
+                device.owner,
+                )
+            );
+        }
+        return mappedDevicesList;
+    }
+
     async getById(id) {
         let device = await this.DeviceLib.getById(id);
-        device = new DevicesMap(device.id, device.name, device.brand, device.code, device.color);
+        device = new DevicesMap(device.id, device.name, device.brand, device.code, device.color, device.owner);
         return device;
     }
 
@@ -17,9 +33,11 @@ class DeviceService {
             deviceParams.name,  
             deviceParams.brand,  
             deviceParams.code,  
-            deviceParams.color
+            deviceParams.color,
+            deviceParams.ownerId
         );
-        values = values.join(',');
+        let separator = `','`;
+        values = `'${Object.values(values).join(separator)}'`;
         return await this.DeviceLib.create(values);
     }
 
