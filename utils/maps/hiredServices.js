@@ -8,8 +8,8 @@ class HiredServiceMap {
         this.status = status,
         this.setCreatedAt(createdAt),
         this.description = description,
-        this.hour = hour,
-        this.date = date
+        this.setHour(hour),
+        this.setDate(date)
     }
     
     setId(id) {
@@ -23,9 +23,22 @@ class HiredServiceMap {
             this.repairman = repairman;
         }
     }
+
     setCreatedAt(createdAt) {
         if(createdAt != null) {
             this.createdAt = createdAt;
+        }
+    }
+
+    setHour(hour) {
+        if(hour != null) {
+            this.hour = hour;
+        }
+    }
+
+    setDate(date) {
+        if(date != null) {
+            this.date = date;
         }
     }
 }

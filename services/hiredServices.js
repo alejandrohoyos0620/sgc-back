@@ -101,8 +101,8 @@ class HiredServiceService {
             hiredServiceParams.status ? hiredServiceParams.status : 'notApproved', 
             null, 
             hiredServiceParams.description, 
-            hiredServiceParams.hour, 
-            hiredServiceParams.date
+            hiredServiceParams.hour ? hiredServiceParams.hour : null, 
+            hiredServiceParams.date ? hiredServiceParams.date : null
         );
         let separator = `','`;
         values = `'${Object.values(values).join(separator)}'`;
