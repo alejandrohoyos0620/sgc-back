@@ -44,6 +44,16 @@ class ServiceService {
         return this.mapList(servicesList);
     }
 
+    async listByEstablishmentAndType(establishmentId, type) {
+        let servicesList;
+        if(type === 'delivery') {
+            servicesList = await this.ServiceLib.getByEstablishmentAndType(establishmentId, type);
+            return this.mapList(servicesList);
+        } else {
+            return this.listByEstablishment(establishmentId);
+        } 
+    }
+    
     async create(params) {
         let createValues = new ServicesMap(null, params.name, params.isDeliverable, params.price, 
             params.isEnable, params.description, params.establishmentId);

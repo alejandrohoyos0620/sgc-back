@@ -7,6 +7,10 @@ const readSchema = Joi.object({
     id: Joi.number().required()
 });
 
+const toRequestSchema = Joi.object({
+    establishmentId: Joi.number().positive().required(),
+    type: Joi.string().regex(/^delivery|pickup$/).required()
+});
 const createSchema = Joi.object({
     name: Joi.string().max(50).required(),
     isDeliverable: Joi.number().min(0).max(1).required(),
@@ -35,6 +39,7 @@ module.exports = {
     createSchema,
     updateSchema,
     deleteSchema,
-    readSchema
+    readSchema,
+    toRequestSchema
 }
 

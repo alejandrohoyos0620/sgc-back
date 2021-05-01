@@ -43,6 +43,26 @@ async function getByEstablishment(establishmentId) {
     });
 }
 
+async function getByEstablishmentAndType(establishmentId) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT id, name, is_deliverable, price, is_enable, description, establishment_id FROM services where establishment_id = '${establishmentId}' AND is_deliverable = '1'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 async function create(service) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
@@ -108,5 +128,6 @@ module.exports = {
     getByEstablishment,
     update,
     create,
-    deleteService
+    deleteService,
+    getByEstablishmentAndType
 };

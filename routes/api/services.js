@@ -21,6 +21,21 @@ async function(req, res, next) {
     }
 });
 
+router.get('/toRequest',
+passport.authenticate('jwt', {session: false}),
+validation(serviceSchemas.toRequestSchema, 'query'),
+async function(req, res, next) {
+    try{
+        const servicesList = await serviceService.listByEstablishmentAndType(req.query.establishmentId, req.query.type);
+        res.status(200).json({
+            status: 'success',
+            services: servicesList
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
 router.get('/',
 passport.authenticate('jwt', {session: false}),
 validation(serviceSchemas.readSchema, 'query'),
