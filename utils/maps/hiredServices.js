@@ -1,5 +1,5 @@
 class HiredServiceMap {
-    constructor(id, customer, repairman, service, device, status, createdAt, description, hour, date) {
+    constructor(id, customer, repairman, service, device, status, createdAt, description, hour, date, type) {
         this.setId(id);
         this.customer = customer,
         this.setRepairman(repairman),
@@ -9,7 +9,8 @@ class HiredServiceMap {
         this.setCreatedAt(createdAt),
         this.description = description,
         this.setHour(hour),
-        this.setDate(date)
+        this.setDate(date),
+        this.type = type
     }
     
     setId(id) {

@@ -34,7 +34,8 @@ class HiredServiceService {
                 hiredService.created_at,
                 hiredService.description,
                 hiredService.hour,
-                hiredService.date
+                hiredService.date,
+                hiredService.type
                 )
             );
         }
@@ -73,7 +74,8 @@ class HiredServiceService {
             hiredService.created_at,
             hiredService.description,
             hiredService.hour,
-            hiredService.date
+            hiredService.date,
+            hiredService.type
         );
         return mappedHiredService;
     }
@@ -102,7 +104,8 @@ class HiredServiceService {
             null, 
             hiredServiceParams.description, 
             hiredServiceParams.hour ? hiredServiceParams.hour : null, 
-            hiredServiceParams.date ? hiredServiceParams.date : null
+            hiredServiceParams.date ? hiredServiceParams.date : null,
+            hiredServiceParams.type
         );
         let separator = `','`;
         values = `'${Object.values(values).join(separator)}'`;

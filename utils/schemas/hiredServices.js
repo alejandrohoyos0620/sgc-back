@@ -26,7 +26,8 @@ const createSchema = Joi.object({
     status: Joi.string().regex(/^notApproved$/),
     description: Joi.string().max(500).required(),
     date: Joi.string().regex(/^(\d{2,2}-?){2,2}\d{4,4}$/),
-    hour: Joi.string().regex(/^(\d{2,2}:){2,2}\d{2,2}$/)
+    hour: Joi.string().regex(/^(\d{2,2}:){2,2}\d{2,2}$/),
+    type: Joi.string().regex(/^delivery|pickup$/)
 });
 
 const customerIdSchema = Joi.object({
