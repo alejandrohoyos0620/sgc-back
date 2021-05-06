@@ -83,7 +83,7 @@ async function getById(id) {
     });
 }
 
-async function getRepairmansByEstablishment(establishmentId) {
+async function getAvailablesRepairmansByEstablishment(establishmentId, date, hour) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -93,7 +93,13 @@ async function getRepairmansByEstablishment(establishmentId) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM employees where establishment_id ='${establishmentId}' AND role = 'repairman'`, (error, results, fields) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id 
+                          FROM employees 
+                          WHERE establishment_id ='${establishmentId}' AND role = 'repairman' AND id not in(
+                          SELECT repairman_id 
+                          FROM hired_services 
+                          WHERE date = '${date}' AND hour = '${hour}'
+                        )`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -108,5 +114,5 @@ module.exports = {
     login,
     update,
     getById, 
-    getRepairmansByEstablishment
+    getAvailablesRepairmansByEstablishment
 };

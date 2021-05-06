@@ -11,10 +11,10 @@ require('../../utils/auth/strategies/jwt');
 
 router.get('/repairmans',
 passport.authenticate('jwt', {session: false}),
-validation(establishmentsSchemas.establishmentIdSchema, 'query'),
+validation(establishmentsSchemas.availableRepairmansSchema, 'query'),
 async function(req, res, next) {
     try {
-        const repairmansList = await employeeService.listRepairmansByEstablishment(req.query.establishmentId);
+        const repairmansList = await employeeService.listAvailablesRepairmansByEstablishment(req.query.establishmentId, req.query.date, req.query.hour);
         res.status(200).json({
             status: 'success',
             repairmans: repairmansList

@@ -28,8 +28,8 @@ class EmployeeService {
         return employee;
     }
 
-    async listRepairmansByEstablishment(establishmentId) {
-        let repairmansList = await this.EmployeeLib.getRepairmansByEstablishment(establishmentId);
+    async listAvailablesRepairmansByEstablishment(establishmentId, date, hour) {
+        let repairmansList = await this.EmployeeLib.getAvailablesRepairmansByEstablishment(establishmentId, date, hour);
         let mappedRepairmansList = [];
         for(let repairman of repairmansList) {
             mappedRepairmansList.push(
