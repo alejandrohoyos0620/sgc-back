@@ -5,16 +5,18 @@ const validation = require('../../utils/middlewares/validationHandlers');
 const hiredServiceSchemas = require('../../utils/schemas/hiredServices');
 const hiredServicesService = require('../../services/hiredServices');
 const hiredServiceService = new hiredServicesService();
+
 //JWT Strategy
 require('../../utils/auth/strategies/jwt');
 
+//router to get hired services from an establishment and a specific status
 router.get('/establishmentServices', 
-passport.authenticate('jwt', {session: false}),
-validation(hiredServiceSchemas.statusSchema, 'query'),
+passport.authenticate('jwt', {session: false}),  //authenticate with JWT strategy
+validation(hiredServiceSchemas.statusSchema, 'query'),  //validate entry params
 async function(req, res, next) {
     try{
-        const hiredServicesList = await hiredServiceService.listByEstablishmentAndStatus(req.query.establishmentId, req.query.status);
-        res.status(200).json({
+        const hiredServicesList = await hiredServiceService.listByEstablishmentAndStatus(req.query.establishmentId, req.query.status);  //call service class method and save it's response
+        res.status(200).json({  //response with status code 200 and json format
             status: 'success',
             hiredServices: hiredServicesList
         });
@@ -23,6 +25,7 @@ async function(req, res, next) {
     }
 });
 
+//router to get all customer's hired services
 router.get('/customerServices', 
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.customerIdSchema, 'query'),
@@ -38,6 +41,7 @@ async function(req, res, next) {
     }
 });
 
+//router to get all hired services which are assigned to a specific repairman
 router.get('/repairmanServices',
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.statusWithRepairmanIdSchema, 'query'),
@@ -52,6 +56,8 @@ async function(req, res, next) {
         next(error);
     }
 });
+
+//router to change the status of a hired service
 router.put('/change',
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.changeStatusSchema),
@@ -70,6 +76,7 @@ async function(req, res, next) {
     }
 });
 
+//router to approve a specific hired service
 router.put('/approve',
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.approveSchema),
@@ -88,6 +95,7 @@ async function(req, res, next) {
     }
 });
 
+//router to create a hired service
 router.post('/',
 passport.authenticate('jwt', {session: false}),
 validation(hiredServiceSchemas.createSchema),

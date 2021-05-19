@@ -11,24 +11,25 @@ const employeeService = new EmployeesService();
 //JWT Strategy
 require('../../utils/auth/strategies/jwt');
 
+//router to register an user
 router.post('/register', 
-validation(userSchema), 
+validation(userSchema), //validate entry params
 async function(req, res, next) {  
-    if(!req.body.hasOwnProperty('role')){
+    if(!req.body.hasOwnProperty('role')){  //if doesn't exist an entry param called "role" we will register a customer
         try {
-            const confirm = await customerService.register(req.body);
-            res.status(200).json({
+            const confirm = await customerService.register(req.body);  //call customer's service class method and save it's response
+            res.status(200).json({  //response with status code 200 and json format
                 status: "success",
                 results: confirm
             });
         } catch(error) {
             next(error);
         }
-    } else {
+    } else { //if exists an entry param called "role" we will register an employee
         try {
-            delete req.body.city;
-            const confirm = await employeeService.register(req.body);
-            res.status(200).json({
+            delete req.body.city;  //city param is not neccesary for an employee
+            const confirm = await employeeService.register(req.body);  //call employee's service class method and save it's response
+            res.status(200).json({  //response with status code 200 and json format
                 status: "success",
                 results: confirm
             });
@@ -39,8 +40,10 @@ async function(req, res, next) {
     
 });
 
+
+//router to update basic user's information
 router.put('/update', 
-passport.authenticate('jwt', {session: false}),
+passport.authenticate('jwt', {session: false}),  //authenticate with JWT strategy
 validation(userUpdateSchema),
 async function(req, res, next) {
     let confirm;
@@ -57,7 +60,7 @@ async function(req, res, next) {
             status: 'success',
             message: 'The user was updated',
             data: confirm,
-            updatedUser: newUser
+            updatedUser: newUser  //The updated user
         });
     } catch(error) {
         next(error);
