@@ -96,9 +96,11 @@ async function getAvailablesRepairmansByEstablishment(establishmentId, date, hou
         connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id 
                           FROM employees 
                           WHERE establishment_id ='${establishmentId}' AND role = 'repairman' AND id not in(
+                          COALESCE((
                           SELECT repairman_id 
                           FROM hired_services 
                           WHERE date = '${date}' AND hour = '${hour}'
+                          ), 0)
                         )`, (error, results, fields) => {
             if(error) {
                 return reject(error);
