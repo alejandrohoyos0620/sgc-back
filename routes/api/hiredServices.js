@@ -113,4 +113,21 @@ async function(req, res, next) {
     }
 });
 
+//router to delete an specific hired service
+router.delete('/',
+passport.authenticate('jwt', {session: false}),
+validation(hiredServiceSchemas.deleteSchema, 'query'),
+async function(req, res, next) {
+    try{
+        const results = await hiredServiceService.delete(req.query.id);
+        res.status(200).json({
+            status: 'success',
+            message: 'The hiredService was deleted successfully',
+            data: results
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
 module.exports = router;

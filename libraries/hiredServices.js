@@ -146,6 +146,26 @@ async function create(hiredService) {
     });
 }
 
+async function deleteHiredService(hiredServiceId) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente para update');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`DELETE FROM hired_services WHERE id = '${hiredServiceId}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 module.exports = {
     getById,
     getByEstablishmentAndStatus,
@@ -153,5 +173,6 @@ module.exports = {
     changeStatus,
     assignToARepairman,
     getByCustomer,
-    create
+    create,
+    deleteHiredService
 };

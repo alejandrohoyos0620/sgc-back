@@ -34,11 +34,15 @@ const customerIdSchema = Joi.object({
     customerId: Joi.number().positive().required()
 });
 
+const deleteSchema = Joi.object({
+    id: Joi.number().positive().required()
+});
 module.exports = {
     statusSchema,
     statusWithRepairmanIdSchema,
     changeStatusSchema,
     approveSchema,
     createSchema,
-    customerIdSchema
+    customerIdSchema,
+    deleteSchema
 }

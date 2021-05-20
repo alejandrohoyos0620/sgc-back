@@ -127,6 +127,12 @@ class HiredServiceService {
             results.insertId
         ];
     }
+
+    //method to delete an specific hired service
+    async delete(hiredServiceId) {
+        const confirm = await this.HiredServiceLib.deleteHiredService(hiredServiceId);
+        return confirm;
+    }
 }
 
 module.exports = HiredServiceService;
