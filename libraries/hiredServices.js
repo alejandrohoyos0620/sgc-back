@@ -136,7 +136,7 @@ async function create(hiredService) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO hired_services (customer_id, service_id, device_id, status, description, date, hour, type) VALUES (${hiredService});`, (error, results, fields) => {
+        connection.query(`INSERT INTO hired_services (customer_id, service_id, device_id, status, description, hour, date, type) VALUES (${hiredService});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

@@ -34,7 +34,7 @@ class EmployeeService {
 
     //method to list all availables repairmans from an establishment
     async listAvailablesRepairmansByEstablishment(establishmentId, date, hour) {
-        let repairmansList = await this.EmployeeLib.getAvailablesRepairmansByEstablishment(establishmentId, date, hour);
+        let repairmansList = await this.EmployeeLib.getAvailableRepairmansByEstablishment(establishmentId, date, hour);     
         let mappedRepairmansList = [];
         for(let repairman of repairmansList) {
             mappedRepairmansList.push(  //map each repairman in the list
