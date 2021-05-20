@@ -39,7 +39,10 @@ class HiredServiceMap {
 
     setDate(date) {
         if(date != null) {
-            this.date = date;
+            this.date = new Date(date);
+            let month =  this.date.getMonth() + 1 < 10 ? (`0${(this.date.getMonth() + 1)}`) : this.date.getMonth() + 1;
+            let day = this.date.getDate() + 1 < 10 ? `0${this.date.getDate()}` : this.date.getDate();
+            this.date = `${this.date.getFullYear()}-${month}-${day}`;
         }
     }
 }

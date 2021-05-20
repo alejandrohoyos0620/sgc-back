@@ -20,7 +20,6 @@ async function getByEstablishmentAndStatus(establishmentId, status) {
             if(error) {
                 return reject(error);
             }
-            console.log(results);
             return resolve(results);
         });
         connection.end();
