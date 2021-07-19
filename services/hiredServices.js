@@ -118,7 +118,6 @@ class HiredServiceService {
             hiredServiceParams.date ? hiredServiceParams.date : null,
             hiredServiceParams.type
         );
-        console.log(values);
         let separator = `','`;
         values = `'${Object.values(values).join(separator)}'`;  //join hired service's object values before add it to a query into the library
         let results = await this.HiredServiceLib.create(values);

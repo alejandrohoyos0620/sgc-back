@@ -7,6 +7,8 @@ const establishmentsRouter = require('./routes/api/establishments');
 const servicesRouter = require('./routes/api/services');
 const categoriesRouter = require('./routes/api/categories');
 const devicesRouter = require('./routes/api/devices');
+const productsRouter = require('./routes/api/products');
+
 const cors = require('cors');
 const {
     logErrors,
@@ -35,6 +37,7 @@ app.use('/api/establishments', establishmentsRouter);
 app.use('/api/services', servicesRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/devices', devicesRouter);
+app.use('/api/products', productsRouter);
 
 //error handlers
 app.use(logErrors);
