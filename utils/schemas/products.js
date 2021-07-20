@@ -21,7 +21,7 @@ const createSchema = Joi.object({
     code: Joi.string().max(40).required(),
     color: Joi.string().max(15).required(),
     establishmentId: Joi.number().required(),
-    isEnable: Joi.regex(/^1|0$/).required,
+    isEnable: Joi.string().regex(/^1|0$/).required,
 
 });
 
@@ -36,7 +36,7 @@ const updateSchema = Joi.object({
     code: Joi.string().max(40).required(),
     color: Joi.string().max(15).required(),
     establishmentId: Joi.number().required(),
-    isEnable: Joi.regex(/^1|0$/).required,
+    isEnable: Joi.string().regex(/^1|0$/).required,
 });
 
 const deleteSchema = Joi.object({

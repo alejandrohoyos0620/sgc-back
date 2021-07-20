@@ -135,5 +135,5 @@ module.exports = {
     getByCategory,
     update,
     create,
-    deleteCategory
+    deleteProduct
 };

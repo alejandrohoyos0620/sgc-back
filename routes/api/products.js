@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const CategoryService = require('../../services/products');
+const ProductService = require('../../services/products');
 const validation = require('../../utils/middlewares/validationHandlers');
-const categoriesSchemas = require('../../utils/schemas/products');
-const categoryService = new CategoryService();
+const productsSchemas = require('../../utils/schemas/products');
+const productService = new ProductService();
 
 //JWT Strategy
 require('../../utils/auth/strategies/jwt');
@@ -17,7 +17,7 @@ async function(req, res, next) {
     try{
         const productsList = await productsService.listByEstablishment(req.query.establishmentId); //call service class method and save it's response
         res.status(200).json({  //response with status code 200 and json format
-            status: 'success',
+            status: 'success', 
             products: productsList
         });
     } catch(error) {
