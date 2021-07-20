@@ -32,7 +32,7 @@ class ProductService {
         product = new ProductsMap(
             product.id, 
             product.name, 
-            product.categoryId,
+            product.category_id,
             product.price,
             product.brand,
             product.image,
