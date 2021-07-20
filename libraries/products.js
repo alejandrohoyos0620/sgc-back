@@ -66,7 +66,7 @@ async function getByCategory(categoryId) {
     });
 }
 
-async function create(category) {
+async function create(product) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
         if(error) {
@@ -76,7 +76,8 @@ async function create(category) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO categories (name, establishment_id) VALUES (${category});`, (error, results, fields) => {
+        connection.query(`INSERT INTO products (name, category_id, price, brand, image, description, code, color, establishment_id,
+            is_enable) VALUES (${product});`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }
@@ -96,10 +97,10 @@ async function update(product) {
         }
     });
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE products SET name = '${product.name}', category_id = '${product.category}', 
+        connection.query(`UPDATE products SET name = '${product.name}', category_id = '${product.categoryId}', 
         price = '${product.price}', brand = '${product.brand}', image = '${product.image}', description = '${product.description}',
         code = '${product.code}', color = '${product.color}', establishment_id = '${product.establishmentId}',
-        is_enable = '${product.isEnable} WHERE id = '${product.id}'`, (error, results, fields) => {
+        is_enable = '${product.isEnable}' WHERE id = '${product.id}'`, (error, results, fields) => {
             if(error) {
                 return reject(error);
             }

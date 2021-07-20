@@ -12,12 +12,12 @@ class ProductService {
                 product.id, 
                 product.name, 
                 product.category_id,
-                prudcr.price,
+                product.price,
                 product.brand,
                 product.image,
                 product.description,
                 product.code,
-                prouct.color,
+                product.color,
                 product.establishment_id,
                 product.is_enable
                 )
@@ -33,12 +33,12 @@ class ProductService {
             product.id, 
             product.name, 
             product.categoryId,
-            prudcr.price,
+            product.price,
             product.brand,
             product.image,
             product.description,
             product.code,
-            prouct.color,
+            product.color,
             product.establishment_id,
             product.is_enable
         );

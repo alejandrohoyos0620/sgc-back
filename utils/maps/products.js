@@ -1,5 +1,5 @@
 class ProductsMap {
-    constructor(id, name, establishmentId) {
+    constructor(id, name, categoryId, price, brand, image, description, code, color, establishmentId, isEnable) {
         this.setId(id);
         this.name = name;
         this.categoryId = categoryId;

@@ -16,12 +16,12 @@ const createSchema = Joi.object({
     categoryId: Joi.number().required(),
     price: Joi.number().min(0).required(),
     brand: Joi.string().max(30).required(),
-    image: Joi.string().max(100).required(),
+    image: Joi.string().max(300).required(),
     description: Joi.string().max(300).required(),
     code: Joi.string().max(40).required(),
     color: Joi.string().max(15).required(),
     establishmentId: Joi.number().required(),
-    isEnable: Joi.string().regex(/^1|0$/).required,
+    isEnable: Joi.number().min(0).max(1).required(),
 
 });
 
@@ -31,12 +31,12 @@ const updateSchema = Joi.object({
     categoryId: Joi.number().required(),
     price: Joi.number().min(0).required(),
     brand: Joi.string().max(30).required(),
-    image: Joi.string().max(100).required(),
+    image: Joi.string().max(300).required(),
     description: Joi.string().max(300).required(),
     code: Joi.string().max(40).required(),
     color: Joi.string().max(15).required(),
     establishmentId: Joi.number().required(),
-    isEnable: Joi.string().regex(/^1|0$/).required,
+    isEnable: Joi.number().min(0).max(1).required(),
 });
 
 const deleteSchema = Joi.object({

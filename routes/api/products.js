@@ -4,7 +4,7 @@ const passport = require('passport');
 const ProductService = require('../../services/products');
 const validation = require('../../utils/middlewares/validationHandlers');
 const productsSchemas = require('../../utils/schemas/products');
-const productService = new ProductService();
+const productsService = new ProductService();
 
 //JWT Strategy
 require('../../utils/auth/strategies/jwt');
@@ -47,7 +47,7 @@ passport.authenticate('jwt', {session: false}),
 validation(productsSchemas.readSchema, 'query'),
 async function(req, res, next) {
     try{
-        const product = await productService.getById(req.query.id);
+        const product = await productsService.getById(req.query.id);
         res.status(200).json({
             status: 'success',
             product: product
@@ -63,7 +63,7 @@ passport.authenticate('jwt', {session: false}),
 validation(productsSchemas.createSchema),
 async function(req, res, next) {
     try{
-        const confirm = await productService.create(req.body);
+        const confirm = await productsService.create(req.body);
         res.status(200).json({
             status: 'success',
             message: "The product was created seccesfully",
@@ -80,7 +80,7 @@ passport.authenticate('jwt', {session: false}),
 validation(productsSchemas.updateSchema),
 async function(req, res, next) {
     try{
-        const confirm = await productService.update(req.body);
+        const confirm = await productsService.update(req.body);
         res.status(200).json({
             status: 'success',
             message: "The product was updated seccesfully",
@@ -97,7 +97,7 @@ passport.authenticate('jwt', {session: false}),
 validation(productsSchemas.deleteSchema, 'query'),
 async function(req, res, next) {
     try{
-        const confirm = await productService.delete(req.query.id);
+        const confirm = await productsService.delete(req.query.id);
         res.status(200).json({
             status: 'success',
             message: "The product was deleted seccesfully",
