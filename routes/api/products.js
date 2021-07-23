@@ -25,13 +25,45 @@ async function(req, res, next) {
     }
 });
 
-//router to get all products from an establishment
+//router to get all enabled products from an establishment
+router.get('/filterEnabledByEstablishment',
+passport.authenticate('jwt', {session: false}), //authenticate with JWT strategy
+validation(productsSchemas.filterEnabledByEstablishmentSchema, 'query'), //validate entry params
+async function(req, res, next) {
+    try{
+        const productsList = await productsService.listEnabledByEstablishment(req.query.establishmentId, req.query.page ? req.query.page : 1); //call service class method and save it's response
+        res.status(200).json({  //response with status code 200 and json format
+            status: 'success', 
+            products: productsList
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
+//router to get all products from a category
 router.get('/filterByCategory',
 passport.authenticate('jwt', {session: false}), //authenticate with JWT strategy
 validation(productsSchemas.filterByCategorySchema, 'query'), //validate entry params
 async function(req, res, next) {
     try{
         const productsList = await productsService.listByCategory(req.query.categoryId); //call service class method and save it's response
+        res.status(200).json({  //response with status code 200 and json format
+            status: 'success', 
+            products: productsList
+        });
+    } catch(error) {
+        next(error);
+    }
+});
+
+//router to get all products from a category
+router.get('/filterEnabledByCategory',
+passport.authenticate('jwt', {session: false}), //authenticate with JWT strategy
+validation(productsSchemas.filterEnabledByCategorySchema, 'query'), //validate entry params
+async function(req, res, next) {
+    try{
+        const productsList = await productsService.listEnabledByCategory(req.query.categoryId, req.query.page ? req.query.page : 1); //call service class method and save it's response
         res.status(200).json({  //response with status code 200 and json format
             status: 'success', 
             products: productsList

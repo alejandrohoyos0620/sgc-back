@@ -3,8 +3,18 @@ const filterByEstablishmentSchema = Joi.object({
     establishmentId: Joi.number().required()
 });
 
+const filterEnabledByEstablishmentSchema = Joi.object({
+    establishmentId: Joi.number().required(),
+    page: Joi.number().min(1)
+});
+
 const filterByCategorySchema = Joi.object({
     categoryId: Joi.number().required()
+});
+
+const filterEnabledByCategorySchema = Joi.object({
+    categoryId: Joi.number().required(),
+    page: Joi.number().min(1)
 });
 
 const readSchema = Joi.object({
@@ -49,5 +59,7 @@ module.exports = {
     createSchema,
     updateSchema,
     filterByEstablishmentSchema,
-    filterByCategorySchema
+    filterEnabledByEstablishmentSchema,
+    filterByCategorySchema,
+    filterEnabledByCategorySchema
 }

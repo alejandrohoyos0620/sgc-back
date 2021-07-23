@@ -1,4 +1,7 @@
+const { number } = require('joi');
 const ProductsMap = require('../utils/maps/products');
+const PAGE_SIZE = 1;
+
 class ProductService {
     constructor() {
         this.ProductLib = require('../libraries/products');
@@ -26,6 +29,21 @@ class ProductService {
         return mappedProductsList;
     }
 
+    async getNumberOfPages(source, id){
+        let numberOfRecords = await this.ProductLib.countRecordsInFilter(source, id);
+        let numberOfPages = Math.ceil(numberOfRecords[0].records / PAGE_SIZE);
+        return numberOfPages;
+    }
+
+    setPaginationLimit(page){
+        let pageLimit = 0;
+        if(page === null){
+            page = 1;
+        }
+        pageLimit = ((page - 1) * PAGE_SIZE);
+        return pageLimit;
+    }
+
     //method to get an specific product
     async getById(id) {
         let product = await this.ProductLib.getById(id);
@@ -51,10 +69,32 @@ class ProductService {
         return this.mapList(productsList); 
     }
 
+    //method to get all enabled products from an establishment
+    async listEnabledByEstablishment(establishmentId, page) {
+        const numberOfPages = await this.getNumberOfPages('establishment_id', establishmentId);
+        const pageLimit = this.setPaginationLimit(page);
+        let productsList = await this.ProductLib.getEnabledByFilter('establishment_id', establishmentId, pageLimit, PAGE_SIZE);
+        return {
+            numberOfPages: numberOfPages,
+            products: await this.mapList(productsList)
+        }; 
+    }
+
     //method to get all products from a category
     async listByCategory(establishmentId) {
         let productsList = await this.ProductLib.getByCategory(establishmentId);
         return this.mapList(productsList);
+    }
+
+    //method to get all enabled products from a category
+    async listEnabledByCategory(categoryId, page) {
+        const numberOfPages = await this.getNumberOfPages('category_id', categoryId);
+        const pageLimit = this.setPaginationLimit(page);
+        let productsList = await this.ProductLib.getEnabledByFilter('category_id', categoryId, pageLimit, PAGE_SIZE);
+        return {
+            numberOfPages: numberOfPages,
+            products: await this.mapList(productsList)
+        }; 
     }
 
     //method to create a product

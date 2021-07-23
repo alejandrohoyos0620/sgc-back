@@ -45,6 +45,28 @@ async function getByEstablishment(establishmentId) {
     });
 }
 
+async function getEnabledByFilter(filter, establishmentId, limit, size) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT id, name, category_id, price, brand, image, description, code, color, establishment_id, is_enable 
+        FROM products where ${filter}='${establishmentId}' AND is_enable = 1 LIMIT ${limit},${size}`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
+
 async function getByCategory(categoryId) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
@@ -130,11 +152,33 @@ async function deleteProduct(id) {
     });
 }
 
+async function countRecordsInFilter(filter, id) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente para countRecordsInFilter');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT COUNT(*) AS records FROM products WHERE ${filter} = ${id}`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 module.exports = {
     getById,
     getByEstablishment,
+    getEnabledByFilter,
     getByCategory,
     update,
     create,
-    deleteProduct
+    deleteProduct,
+    countRecordsInFilter
 };
