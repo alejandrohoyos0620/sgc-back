@@ -19,10 +19,10 @@ async function(req, res, next){
 
 //recovery password router
 router.post('/recoverPassword', 
-validation(authenticationSchemas.recoverPasswordSchema, 'query'), //validate entry params
+validation(authenticationSchemas.recoverPasswordSchema), //validate entry params
 async function(req, res, next){
     try {
-        const results = await authService.recoverPassword(req.query.email); //call service class method and save it's response
+        const results = await authService.recoverPassword(req.body.email); //call service class method and save it's response
         res.status(results[0]).json({
             status: results[0] === 200 ? 'success' : 'failed',
             message: results[1]
