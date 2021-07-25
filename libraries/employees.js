@@ -83,6 +83,26 @@ async function getById(id) {
     });
 }
 
+async function getByEmail(email) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT id, name, phone_number, role, address, email, establishment_id FROM employees where email='${email}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 async function getAvailableRepairmansByEstablishment(establishmentId, date, hour) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
@@ -109,10 +129,32 @@ async function getAvailableRepairmansByEstablishment(establishmentId, date, hour
     });
 }
 
+async function updatePassword(email, password) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE employees SET password = '${password}' WHERE email = '${email}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 module.exports = {
     register,
     login,
     update,
     getById, 
-    getAvailableRepairmansByEstablishment
+    getByEmail,
+    getAvailableRepairmansByEstablishment,
+    updatePassword
 };

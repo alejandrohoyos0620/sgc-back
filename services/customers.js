@@ -28,6 +28,13 @@ class CustomerService {
         customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);  //the database response is mapped to a more friendly object
         return customer;
     }
+
+    //method to get a specific customer by email
+    async getByEmail(email) {
+        let customer = await this.CustomerLib.getByEmail(email);
+        customer = new CustomersMap(customer.id, customer.name, customer.phone_number, customer.city, customer.address, customer.email);  //the database response is mapped to a more friendly object
+        return customer;
+    }
 }
 
 module.exports = CustomerService;

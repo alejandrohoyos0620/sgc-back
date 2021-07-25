@@ -8,6 +8,7 @@ const servicesRouter = require('./routes/api/services');
 const categoriesRouter = require('./routes/api/categories');
 const devicesRouter = require('./routes/api/devices');
 const productsRouter = require('./routes/api/products');
+const ratingsRouter = require('./routes/api/ratings'); 
 
 const cors = require('cors');
 const {
@@ -38,6 +39,7 @@ app.use('/api/services', servicesRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/devices', devicesRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/ratings', ratingsRouter);
 
 //error handlers
 app.use(logErrors);

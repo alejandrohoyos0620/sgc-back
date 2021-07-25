@@ -42,6 +42,7 @@ async function login(email) {
         connection.end();
     });
 }
+
 async function update(params) {
     connection = mysql.createConnection(config);
     connection.connect(function(error) {
@@ -82,9 +83,51 @@ async function getById(id) {
     });
 }
 
+async function getByEmail(email) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT id, name, phone_number, city, address, email FROM customers where email='${email}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
+async function updatePassword(email, password) {
+    connection = mysql.createConnection(config);
+    connection.connect(function(error) {
+        if(error) {
+            throw error;
+        } else {
+            console.log('Conexión a MYSQL realizada exitosamente');
+        }
+    });
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE customers SET password = '${password}' WHERE email = '${email}'`, (error, results, fields) => {
+            if(error) {
+                return reject(error);
+            }
+            return resolve(results);
+        });
+        connection.end();
+    });
+}
+
 module.exports = {
     register,
     login,
     update,
-    getById
+    getById,
+    getByEmail,
+    updatePassword
 };

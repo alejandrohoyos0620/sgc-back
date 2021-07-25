@@ -3,6 +3,7 @@ const EmployeesService = require('./employees');
 const ServicesService = require('./services');
 const DevicesService = require('./devices');
 const HiredServicesMap = require('../utils/maps/hiredServices');
+const RatingsService = require('./ratings');
 
 class HiredServiceService {
     constructor() {
@@ -11,10 +12,11 @@ class HiredServiceService {
         this.employeesService = new EmployeesService();
         this.servicesService = new ServicesService();
         this.devicesService = new DevicesService();
+        this.ratingsService = new RatingsService();
     }
 
     //method to map all hired services in a list
-    async mapList(hiredServicesList) {
+    async mapList(hiredServicesList, rating) {
         let mappedHiredServicesList = [];
         for(let [index, hiredService] of hiredServicesList.entries()) {  //we got the element and the iterator of te cycle
             //call to other services to get the full customer, employee, service and device objects
@@ -38,7 +40,8 @@ class HiredServiceService {
                 hiredService.description,
                 hiredService.hour,
                 hiredService.date,
-                hiredService.type
+                hiredService.type,
+                rating ? await this.ratingsService.getByHiredService(hiredService.id) :  null
                 )
             );
         }
@@ -48,7 +51,7 @@ class HiredServiceService {
     //method to get all hired services from an establishment and which matches with an specific status
     async listByEstablishmentAndStatus(establishmentId, status) {
         let hiredServicesList = await this.HiredServiceLib.getByEstablishmentAndStatus(establishmentId, status);
-        return this.mapList(hiredServicesList);
+        return status === 'finished' ? this.mapList(hiredServicesList, true) : this.mapList(hiredServicesList, false);
     }
 
     //method to get all hired services assigned to a specific repairman and which matches with an specific status
@@ -60,7 +63,7 @@ class HiredServiceService {
     //method to get all hired services by a specific customer
     async listByCustomer(customerId) {
         let hiredServicesList = await this.HiredServiceLib.getByCustomer(customerId);
-        return this.mapList(hiredServicesList);
+        return this.mapList(hiredServicesList, true);
     }
 
     //method to update the status of a specific hired services

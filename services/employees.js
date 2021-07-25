@@ -32,6 +32,13 @@ class EmployeeService {
         return employee;
     }
 
+    //method to get a specific employee by email
+    async getByEmail(email) {
+        let employee = await this.EmployeeLib.getByEmail(email);
+        employee = new EmployeesMap(employee.id, employee.name, employee.role, employee.address, employee.phone_number, employee.email, null, employee.establishment_id);  //the database response is mapped to a more friendly object
+        return employee;
+    }
+
     //method to list all availables repairmans from an establishment
     async listAvailablesRepairmansByEstablishment(establishmentId, date, hour) {
         let repairmansList = await this.EmployeeLib.getAvailableRepairmansByEstablishment(establishmentId, date, hour);     
