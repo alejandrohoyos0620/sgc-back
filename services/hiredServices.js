@@ -4,6 +4,7 @@ const ServicesService = require('./services');
 const DevicesService = require('./devices');
 const HiredServicesMap = require('../utils/maps/hiredServices');
 const RatingsService = require('./ratings');
+const transporter = require('../configuration/mailer');
 
 class HiredServiceService {
     constructor() {
@@ -48,6 +49,37 @@ class HiredServiceService {
         return mappedHiredServicesList;
     }
 
+    //method to send an email and tonify the customer about the state of the hired service
+    async notifyStateByEmail(repairman, service, customer, device, status, email){
+        console.log('AQUIII',repairman, service, customer, device, status, email);
+        try{
+            await transporter.sendMail({
+                from: '"Estado del servicio SGC" <sgcproject1@gmail.com>',
+                to: email,
+                subject: "Estado de tu servicio contratado SGC",
+                html: `
+                <div style="background-color: white; text-align:center; border-radius: 10px; width: 500px; margin:auto; padding-bottom:10px; color: black; border: solid 1px grey">
+                <h2 style="border-top-left-radius: 10px; border-top-right-radius: 10px; background-color: #2196f3; color: white; border-bottom:solid 1px grey; padding: 10px; margin:0">Nuevo estado de tu servicio</h2>
+                <p style="text-align:left; padding-left:5px;">Hola <b>${customer}!</b> Este es un correo de notificación del estado de tu servicio contratado mediante SGC.<p>
+                <div style="border-radius: 10px; background-color: #2196f3; color: white; width:60%; margin:auto;">
+                <h2 style="margin-bottom: 0; padding-bottom:0; padding-top: 5px;">El estado ha cambiado a:</h2>
+                <p style="margin-top:10px; font-size:30px; color:black; padding-left: 5px; padding-right: 5px"><b>${status}</b><p>
+                </div>
+                <p style="text-align:left; padding-left:5px;">Información adicional:<p>
+                <ul style="text-align:left; padding-left:5px;">
+                <li>Asignado al técnico: <b>${repairman}</b></li>
+                <li>Tipo e servicio: <b>${service}</b></li>
+                <li>Dispositivo asociado: <b>${device}</b></li>
+                </ul>
+                <p style="text-align:left; padding-left:5px;">Saludos, SGC.</p>
+                </div>`
+            });
+            return 'Email enviado';
+        } catch(error){
+            return error;
+        }
+    }
+
     //method to get all hired services from an establishment and which matches with an specific status
     async listByEstablishmentAndStatus(establishmentId, status) {
         let hiredServicesList = await this.HiredServiceLib.getByEstablishmentAndStatus(establishmentId, status);
@@ -69,6 +101,17 @@ class HiredServiceService {
     //method to update the status of a specific hired services
     async changeStatus(id, newStatus) {
         let confirm = await this.HiredServiceLib.changeStatus(id, newStatus);
+        let hiredService = await this.getById(id);
+        console.log(hiredService);
+        let emailConfirm = await this.notifyStateByEmail(
+            hiredService.repairman.sub, 
+            hiredService.service.name, 
+            hiredService.customer.sub, 
+            hiredService.device.name,
+            hiredService.status,
+            hiredService.customer.email
+            );
+        confirm.emailConfirmationMessage = emailConfirm;
         return confirm;
     }
 
