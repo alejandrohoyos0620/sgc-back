@@ -1,6 +1,6 @@
 const { number } = require('joi');
 const ProductsMap = require('../utils/maps/products');
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 9;
 
 class ProductService {
     constructor() {
